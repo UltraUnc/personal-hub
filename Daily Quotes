@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Daily Motivation</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #0d1117;
+      color: #c9d1d9;
+      padding: 20px;
+    }
+    .card {
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 12px;
+      padding: 40px;
+      max-width: 600px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+    }
+    .tag {
+      font-size: 0.85rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #58a6ff;
+      margin-bottom: 16px;
+      font-weight: 600;
+    }
+    blockquote {
+      font-size: 1.4rem;
+      line-height: 1.6;
+      font-style: italic;
+      color: #f0f6fc;
+      margin-bottom: 20px;
+    }
+    .author {
+      font-size: 1rem;
+      color: #8b949e;
+      margin-bottom: 30px;
+    }
+    .buttons {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    button, a.nav-link {
+      padding: 10px 20px;
+      font-size: 0.95rem;
+      border-radius: 6px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      font-weight: 500;
+    }
+    button {
+      background-color: #238636;
+      color: #ffffff;
+      border: 1px solid rgba(240, 246, 252, 0.1);
+    }
+    button:hover {
+      background-color: #2ea043;
+    }
+    a.nav-link {
+      background: transparent;
+      color: #58a6ff;
+      border: 1px solid #30363d;
+      display: inline-flex;
+      align-items: center;
+    }
+    a.nav-link:hover {
+      background: #21262d;
+      border-color: #8b949e;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <div class="tag" id="quote-badge">Daily Motivation</div>
+    <blockquote id="quote-text">Loading quote...</blockquote>
+    <div class="author" id="quote-author"></div>
+
+    <div class="buttons">
+      <button onclick="cycleQuote()">Next Quote</button>
+      <a class="nav-link" href="index.html">← Back to Hub</a>
+    </div>
+  </div>
+
+  <script>
+    const quotes = [
+      { text: "The secret of getting ahead is getting started.", author: "Mark Twain" },
+      { text: "It always seems impossible until it's done.", author: "Nelson Mandela" },
+      { text: "Don't watch the clock; do what it does. Keep going.", author: "Sam Levenson" },
+      { text: "Success is not final, failure is not fatal: it is the courage to continue that counts.", author: "Winston Churchill" },
+      { text: "Small steps every day add up to big results.", author: "Unknown" },
+      { text: "Believe you can and you're halfway there.", author: "Theodore Roosevelt" },
+      { text: "Your limitation—it's only your imagination.", author: "Unknown" }
+    ];
+
+    let currentIndex = 0;
+
+    // Pick a deterministic quote for the current day automatically
+    function getDailyIndex() {
+      const today = new Date();
+      const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / 1000 / 60 / 60 / 24);
+      return dayOfYear % quotes.length;
+    }
+
+    function renderQuote(index) {
+      document.getElementById('quote-text').textContent = `“${quotes[index].text}”`;
+      document.getElementById('quote-author').textContent = `— ${quotes[index].author}`;
+    }
+
+    function cycleQuote() {
+      currentIndex = (currentIndex + 1) % quotes.length;
+      renderQuote(currentIndex);
+    }
+
+    // Initialize with today's quote
+    currentIndex = getDailyIndex();
+    renderQuote(currentIndex);
+  </script>
+</body>
+</html>
