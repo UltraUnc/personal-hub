@@ -46,44 +46,25 @@
       color: #f0f6fc;
       margin-bottom: 20px;
     }
-    .author {
-      font-size: 1rem;
-      color: #8b949e;
-      margin-bottom: 30px;
-    }
     .buttons {
       display: flex;
       gap: 12px;
       justify-content: center;
       flex-wrap: wrap;
     }
-    button, a.nav-link {
+    button {
       padding: 10px 20px;
       font-size: 0.95rem;
       border-radius: 6px;
       cursor: pointer;
-      text-decoration: none;
-      transition: all 0.2s ease;
       font-weight: 500;
-    }
-    button {
       background-color: #238636;
       color: #ffffff;
       border: 1px solid rgba(240, 246, 252, 0.1);
+      transition: background-color 0.2s ease;
     }
     button:hover {
       background-color: #2ea043;
-    }
-    a.nav-link {
-      background: transparent;
-      color: #58a6ff;
-      border: 1px solid #30363d;
-      display: inline-flex;
-      align-items: center;
-    }
-    a.nav-link:hover {
-      background: #21262d;
-      border-color: #8b949e;
     }
   </style>
 </head>
@@ -92,15 +73,14 @@
   <div class="card">
     <div class="tag" id="quote-badge">Daily Motivation</div>
     <blockquote id="quote-text">Loading quote...</blockquote>
-    <div class="author" id="quote-author"></div>
 
     <div class="buttons">
-      <button onclick="cycleQuote()">Next Quote</button>
+      <button type="button" onclick="cycleQuote()">Next Quote</button>
     </div>
   </div>
 
   <script>
-   const quotes = [
+    const quotes = [
       "I love your butt",
       "Im just frustrated today and need some time to decompress",
       "Can you feed the cats",
@@ -135,14 +115,18 @@
 
     function getDailyIndex() {
       const today = new Date();
-      const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / 1000 / 60 / 60 / 24);
+      const start = new Date(today.getFullYear(), 0, 0);
+      const diff = today - start;
+      const oneDay = 1000 * 60 * 60 * 24;
+      const dayOfYear = Math.floor(diff / oneDay);
       return dayOfYear % quotes.length;
     }
 
     function renderQuote(index) {
-      document.getElementById('quote-text').textContent = `“${quotes[index]}”`;
-      const authorEl = document.getElementById('quote-author');
-      if (authorEl) authorEl.textContent = "";
+      const el = document.getElementById('quote-text');
+      if (el && quotes[index]) {
+        el.textContent = "“" + quotes[index] + "”";
+      }
     }
 
     function cycleQuote() {
@@ -150,18 +134,6 @@
       renderQuote(currentIndex);
     }
 
-    currentIndex = getDailyIndex();
-    renderQuote(currentIndex);
-      document.getElementById('quote-text').textContent = `“${quotes[index].text}”`;
-      document.getElementById('quote-author').textContent = `— ${quotes[index].author}`;
-    }
-
-    function cycleQuote() {
-      currentIndex = (currentIndex + 1) % quotes.length;
-      renderQuote(currentIndex);
-    }
-
-    // Initialize with today's quote
     currentIndex = getDailyIndex();
     renderQuote(currentIndex);
   </script>
