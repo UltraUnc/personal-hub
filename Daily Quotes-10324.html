@@ -100,19 +100,39 @@
   </div>
 
   <script>
-    const quotes = [
-      { text: "The secret of getting ahead is getting started.", author: "Mark Twain" },
-      { text: "It always seems impossible until it's done.", author: "Nelson Mandela" },
-      { text: "Don't watch the clock; do what it does. Keep going.", author: "Sam Levenson" },
-      { text: "Success is not final, failure is not fatal: it is the courage to continue that counts.", author: "Winston Churchill" },
-      { text: "Small steps every day add up to big results.", author: "Unknown" },
-      { text: "Believe you can and you're halfway there.", author: "Theodore Roosevelt" },
-      { text: "Your limitation—it's only your imagination.", author: "Unknown" }
+   const quotes = [
+      "I love your butt",
+      "Im just frustrated today and need some time to decompress",
+      "Can you feed the cats",
+      "69?",
+      "Stop being stingy and lemme smell your fart!!",
+      "You can use my face as your chair",
+      "Even though today is a rough day, I still love you",
+      "Are you taking care of your health?",
+      "You better be taking care of yourself!",
+      "I Love You",
+      "Calm down, is it that serious?!?!",
+      "Just give me a sec to decompress",
+      "I miss you",
+      "Make sure those 2 assholes aren't bullying my little girl",
+      "Dang, theres a new VR game coming out and I should be able to play it on my laptop.",
+      "Can you not abuse me today?",
+      "Them titties be tittying!!",
+      "Hey.....",
+      "You look good",
+      "Mmmmm Carters sounds good toady",
+      "I wish I had thought of this sooner.",
+      "Don't cry",
+      "(Look at one of the pics when we got together) We were so little lol.",
+      "We started with a futon in my moms townhouse lol",
+      "We've been through a lot together; Moving to Mexico(EP), Covid, Our mothers, President Trump",
+      "Remember when you 'Asked' to borrow a chair at OCI, cause I remember",
+      "You jus threatened to stab me because i love you more than you love me",
+      "Theres a secret code for you to use, FYI i created it randomly"
     ];
 
     let currentIndex = 0;
 
-    // Pick a deterministic quote for the current day automatically
     function getDailyIndex() {
       const today = new Date();
       const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / 1000 / 60 / 60 / 24);
@@ -120,6 +140,18 @@
     }
 
     function renderQuote(index) {
+      document.getElementById('quote-text').textContent = `“${quotes[index]}”`;
+      const authorEl = document.getElementById('quote-author');
+      if (authorEl) authorEl.textContent = "";
+    }
+
+    function cycleQuote() {
+      currentIndex = (currentIndex + 1) % quotes.length;
+      renderQuote(currentIndex);
+    }
+
+    currentIndex = getDailyIndex();
+    renderQuote(currentIndex);
       document.getElementById('quote-text').textContent = `“${quotes[index].text}”`;
       document.getElementById('quote-author').textContent = `— ${quotes[index].author}`;
     }
